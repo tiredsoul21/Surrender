@@ -1,0 +1,42 @@
+.sidebarMenu
+{
+    background-color: var(--colorTertiaryDarken2);
+    width: auto;
+    height: 100%;
+    color: var(--defaultText)
+}
+
+.max-bar
+{
+    width: 200px;
+    height: 100%;
+    transition: .40s;
+}
+
+.min-bar
+{
+    width: 60px;
+    height: 100%;
+    transition: .40s;
+}
+
+.sidebar-item-set-label-min
+{
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    font-size:12px;
+    font-weight: normal;
+    color: var(--defaultText);
+}
+
+.sidebar-item-set-label-max
+{
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    font-size:24px;
+    font-weight: bold;
+    color: var(--defaultText);
+}
+

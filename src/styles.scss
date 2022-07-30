@@ -1,0 +1,153 @@
+html,body
+{
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+// Global settings
+:root{
+    // Font Sizes
+    --fontSize: 1rem;
+    --fontSizeTitle: 2.25rem;
+    --fontSizeXL: 1.125rem;
+    --fontSizeLG: 1rem;
+    --fontSizeMD: 0.875rem;
+    --fontSizeSM: 0.75rem;
+    --fontSizeXS: 0.65rem;
+
+    // Font
+    --fontFamilyMono: "Roboto Mono", monospace;
+    font: var(--fontFamilyMono);
+
+    // General Color Defintions
+    --colorBlack: rgb(0, 0, 0);
+    --colorWhite: rgb(255, 255, 255);
+    --colorGray: rgb(170, 170, 170);
+}
+
+// Dark Theme Variables
+.dark-theme
+{
+    // Font Color Defaults
+    --fontColor: #fff;
+    --fontColorInverse: #000;
+
+    // Theme Color Definitions
+    // Primary Shades
+    --colorPrimaryShade1: rgb(196, 219, 234);
+    --colorPrimaryShade2: rgb(137, 184, 214);
+    --colorPrimaryShade3: rgb(78, 148, 193);
+    --colorPrimaryShade4: rgb(50, 106, 142);
+    --colorPrimaryShade5: rgb(29, 62, 83);
+    --colorPrimaryShade6: rgb(23, 50, 66);
+    --colorPrimaryShade7: rgb(17, 37, 50);
+    --colorPrimaryShade8: rgb(12, 25, 33);
+    --colorPrimaryShade9: rgb(6, 12, 17);
+
+    // Secondary Shades
+    --colorSecondaryShade1: rgb(218, 219, 231);
+    --colorSecondaryShade2: rgb(181, 184, 208);
+    --colorSecondaryShade3: rgb(144, 148, 184);
+    --colorSecondaryShade4: rgb(107, 112, 160);
+    --colorSecondaryShade5: rgb(81, 85, 126);
+    --colorSecondaryShade6: rgb(65, 68, 101);
+    --colorSecondaryShade7: rgb(49, 51, 76);
+    --colorSecondaryShade8: rgb(32, 34, 50);
+    --colorSecondaryShade9: rgb(16, 17, 25);
+
+    // Tertiary Shades
+    --colorTertiaryShade1: rgb(230, 225, 234);
+    --colorTertiaryShade2: rgb(205, 194, 213);
+    --colorTertiaryShade3: rgb(179, 164, 193);
+    --colorTertiaryShade4: rgb(154, 133, 172);
+    --colorTertiaryShade5: rgb(129, 103, 151);
+    --colorTertiaryShade6: rgb(103, 82, 121);
+    --colorTertiaryShade7: rgb(77, 62, 91);
+    --colorTertiaryShade8: rgb(52, 41, 60);
+    --colorTertiaryShade9: rgb(26, 21, 30);
+
+    // Quaternary Shades
+    --colorQuaternaryShade1: rgb(247, 247, 238);
+    --colorQuaternaryShade2: rgb(239, 238, 220);
+    --colorQuaternaryShade3: rgb(230, 230, 203);
+    --colorQuaternaryShade4: rgb(222, 221, 185);
+    --colorQuaternaryShade5: rgb(214, 213, 168);
+    --colorQuaternaryShade6: rgb(190, 188, 116);
+    --colorQuaternaryShade7: rgb(156, 154, 73);
+    --colorQuaternaryShade8: rgb(104, 103, 49);
+    --colorQuaternaryShade9: rgb(52, 51, 24);
+}
+
+// Dark Theme Variables
+.light-theme
+{
+    // Font Color Defaults
+    --fontColor: #000;
+    --fontColorInverse: #fff;
+
+    // Theme Color Definitions
+    // Primary Shades
+    --colorPrimaryShade1: rgb(59, 23, 46);
+    --colorPrimaryShade2: rgb(119, 47, 91);
+    --colorPrimaryShade3: rgb(179, 70, 137);
+    --colorPrimaryShade4: rgb(205, 126, 175);
+    --colorPrimaryShade5: rgb(228, 186, 212);
+    --colorPrimaryShade6: rgb(233, 200, 221);
+    --colorPrimaryShade7: rgb(239, 214, 229);
+    --colorPrimaryShade8: rgb(244, 227, 238);
+    --colorPrimaryShade9: rgb(250, 241, 246);
+
+    // Secondary Shades
+    --colorSecondaryShade1: rgb(73, 21, 48);
+    --colorSecondaryShade2: rgb(146, 41, 96);
+    --colorSecondaryShade3: rgb(205, 77, 143);
+    --colorSecondaryShade4: rgb(225, 150, 189);
+    --colorSecondaryShade5: rgb(246, 223, 235);
+    --colorSecondaryShade6: rgb(248, 229, 239);
+    --colorSecondaryShade7: rgb(250, 236, 243);
+    --colorSecondaryShade8: rgb(251, 242, 247);
+    --colorSecondaryShade9: rgb(253, 249, 251);
+
+    // Tertiary Shades
+    --colorTertiaryShade1: rgb(70, 27, 27);
+    --colorTertiaryShade2: rgb(140, 54, 54);
+    --colorTertiaryShade3: rgb(194, 97, 97);
+    --colorTertiaryShade4: rgb(221, 167, 167);
+    --colorTertiaryShade5: rgb(248, 237, 237);
+    --colorTertiaryShade6: rgb(249, 241, 241);
+    --colorTertiaryShade7: rgb(251, 244, 244);
+    --colorTertiaryShade8: rgb(252, 248, 248);
+    --colorTertiaryShade9: rgb(254, 251, 251);
+
+    // Quaternary Shades
+    --colorQuaternaryShade1: rgb(12, 78, 49);
+    --colorQuaternaryShade2: rgb(24, 156, 97);
+    --colorQuaternaryShade3: rgb(46, 223, 145);
+    --colorQuaternaryShade4: rgb(124, 235, 186);
+    --colorQuaternaryShade5: rgb(202, 247, 227);
+    --colorQuaternaryShade6: rgb(213, 249, 233);
+    --colorQuaternaryShade7: rgb(223, 250, 238);
+    --colorQuaternaryShade8: rgb(234, 252, 244);
+    --colorQuaternaryShade9: rgb(244, 253, 249);
+}
+
+.row
+{
+    display: flex;
+    width: 100%;
+    table-layout: fixed;
+    border-spacing: 10px;
+    margin: 0px 0px 0px 0px;
+}
+ 
+.col
+{
+    display: table-cell;
+}
+ 
+
+.h-100
+{
+  height: 100%
+}

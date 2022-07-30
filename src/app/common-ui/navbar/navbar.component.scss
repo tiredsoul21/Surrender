@@ -1,0 +1,28 @@
+.navbar-content
+{
+  width: 100%;
+  padding: 8px;
+  background: var(--colorPrimaryShade6);
+}
+
+.navbar-brand
+{
+  font-size: var(--fontSizeTitle);
+  margin-right: 10px;
+  padding: 0px 0px 0px 0px;
+}
+
+.navbar-brand-image
+{
+  width: 72px;
+  height: 72px;
+  border-radius: 15px;
+  border: solid var(--colorQuaternaryShade8) 1px;
+}
+
+.navbar-brand-text
+{
+  color: var(--fontColor);
+  margin-left: 10px;
+  margin-top: 10px;
+}
