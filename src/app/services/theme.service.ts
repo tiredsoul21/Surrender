@@ -9,7 +9,8 @@
     Copyright (C) 2022, Derrick Cox,
     All rights reserved.
 
-    Permission to use, copy, modify, and distribute this software for any purpose with    or without fee is hereby granted, provided that the above copyright notice and this
+    Permission to use, copy, modify, and distribute this software for any purpose
+    without fee is hereby granted, provided that the above copyright notice and this
     permission notice appear in all copies.
 
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
@@ -25,10 +26,12 @@
 */
 
 import { Injectable } from '@angular/core';
+import { StringKeyValuePairs } from '../types/general.types';
 
 @Injectable()
 
-/** * This service applies a targeted theme to a an html
+/** 
+ * This service applies a targeted theme to a an html
  * element with a specific reference.  * * If using other
  * components in the repository, then to apply settings
  * globally, then target 'dashboard', which is the default.
@@ -41,7 +44,7 @@ import { Injectable } from '@angular/core';
  * theme, but can have as many as desired, so long as they are
  * defined in the styles.  Each theme should contains a similar
  * variable definition scheme to transition to.
- * * @see /Surrender/src/styles.scss
+ * @see /Surrender/src/styles.scss
  */
 export class ThemeService
 {
@@ -55,15 +58,14 @@ export class ThemeService
      * This string is the element that theme is to be updated
      * If this is a global theme
      */
-    private elementReferenceId: string = "dashboard";
+    private elementReferenceId: string = "body";
 
     /** The 1-to-1 relationship between theme name and class name */
-    private themeList: Map<string, string> = new Map<string,string>
-    ([
+    private themeList: Array<StringKeyValuePairs> = [
         //Define here the list of themes
-        ["Light Theme", "light-theme"],
-        ["Dark Theme", "dark-theme"]
-    ]);
+        {value: "Light Theme", key: "light-theme"},
+        {value: "Dark Theme", key: "dark-theme"}
+    ];
 
     constructor()
     {
@@ -75,7 +77,7 @@ export class ThemeService
      * This method returns the default chosen theme.
      * @returns {string} - the default theme for initialization
      */
-    getDefaultTheme(): string
+    public getDefaultTheme(): string
     {
         return this.defaultTheme;
     }
@@ -83,9 +85,9 @@ export class ThemeService
     /**
      * This method allows us to refernce css theme tags with a given
      * display name for user selection
-     * @returns {Map<string, string>} - returns the css theme map
+     * @returns {Array<StringKeyValuePairs>} - returns the css theme array
      */
-    getThemeList(): Map<string, string>
+    public getThemeList(): Array<StringKeyValuePairs>
     {
         return this.themeList;
     }
@@ -94,12 +96,11 @@ export class ThemeService
      * This method sets the current referenceId to a targeted them
      * @param {string} theme - desired theme
      */
-    setTheme(theme: string): void
+    public setTheme(theme: string): void
     {
-        console.log(theme)
         // Fetch the dashboard Element (this is everything)
         var element = document.getElementById(this.elementReferenceId);
-console.log(element)
+
         // Strip current theme
         element.classList.remove(this.currentTheme)
 
@@ -109,10 +110,19 @@ console.log(element)
     }
 
     /**
+     * This method returns the currently selected them
+     * @returns {string} theme class name
+     */
+    public getCurrentTheme(): string
+    {
+        return this.currentTheme;
+    }
+
+    /**
      * This method allows to to set the target html elemenet reference
      * @param referenceId - targeted html reference string
      */
-    setElementReferenceId(referenceId: string): void
+    public setElementReferenceId(referenceId: string): void
     {
         this.elementReferenceId = referenceId;
     }

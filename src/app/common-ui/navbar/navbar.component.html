@@ -9,7 +9,8 @@
     Copyright (C) 2022, Derrick Cox,
     All rights reserved.
 
-    Permission to use, copy, modify, and distribute this software for any purpose with    or without fee is hereby granted, provided that the above copyright notice and this
+    Permission to use, copy, modify, and distribute this software for any purpose
+    without fee is hereby granted, provided that the above copyright notice and this
     permission notice appear in all copies.
 
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
@@ -26,9 +27,28 @@
 
 <div class="navbar-content">
     <div class="row navbar-brand">
-        <img class="navbar-brand-image" src="/assets/images/innovation.jpg" (click)="onChange()">
+        <!-- BRAND IMAGE -->
+        <!-- If there are navbar menu items to display, let's make a list -->
+        <div *ngIf="brandMenuItems.length > 0">
+            <button [matMenuTriggerFor]="navbarMenu" class="image-button">
+                <img class="navbar-brand-image" [src]="brandImage">
+            </button>
+            <mat-menu #navbarMenu="matMenu">
+                <!-- Loop through the list of menu items give -->
+                <button mat-menu-item  
+                        *ngFor="let menuItem of brandMenuItems"
+                        (click)="brandMenuCallback(menuItem.selectionCallback)">
+                    <mat-icon>{{menuItem.icon}}</mat-icon>
+                    <span>{{menuItem.displayName}}</span>
+                </button>
+            </mat-menu>
+        </div>
+        <!-- If there are not menu items, just display an image -->
+        <img class="navbar-brand-image" [src]="brandImage" *ngIf="brandMenuItems.length == 0">
+
+        <!-- BRAND TEXT -->
         <div class="navbar-brand-text">
-            <h1>On Bent Knee</h1>
+            <h1>{{brandText}}</h1>
         </div>
     </div>
 </div>

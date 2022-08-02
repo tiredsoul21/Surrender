@@ -1,4 +1,4 @@
-<!-- Copyright - License
+/* Copyright - License
 
     bentKnee is true Open Source/Free Software and meet all definitions as such.
     It means that you are free to modify and redistribute all contents of the UI.
@@ -23,28 +23,34 @@
     Except as contained in this notice, the name of a copyright holder shall not be
     used in advertising or otherwise to promote the sale, use or other dealings in
     this Software without prior written authorization of the copyright holder.
--->
+*/
 
-<div class="sidebarMenu" [ngClass]="minimize ? 'min-bar' : 'max-bar'">
-    <div *ngIf="minimize">
-        <div class="sidebar-minimize-button">
-            <button mat-icon-button  (click)="minimizeEvent()">
-                <mat-icon svgIcon="chevron-double-right"></mat-icon>
-            </button>
-        </div>
-        <div class="sidebar-item-set-label-min">
-            Analysis
-        </div>
-    </div>
+export interface ItemSelectionType
+{
+    // This is some unique ID for the menu item (is needed)
+    key?: string;
 
-    <div *ngIf="!minimize">
-        <div class="sidebar-minimize-button">
-            <button mat-icon-button  (click)="minimizeEvent()">
-                <mat-icon svgIcon="chevron-double-left"></mat-icon>
-            </button>
-        </div>
-        <div class="sidebar-item-set-label-max">
-            Analysis
-        </div>
-    </div>
-</div>
+    // This is a proper display name for the item
+    displayName: string;
+
+    // Is there an mat-icon associated with the menu item? If so add it here.
+    // See https://jossef.github.io/material-design-icons-iconfont/ for list of icons
+    icon?: string;
+
+    // This is a callback function that provides a handle to pass functionality from
+    // a menu or selection item, back to a service
+    selectionCallback: ()=> void;
+}
+
+/**
+ * This interface is used for multiple interfaces that require simple
+ * one-to-one string mappings.
+ */
+export interface StringKeyValuePairs
+{
+    // This is intended to be a unique identifier for the object
+    key: string;
+
+    // This is indended to be a useable value, such as a 'Display Value'
+    value: string;
+}

@@ -25,52 +25,30 @@
     this Software without prior written authorization of the copyright holder.
 */
 
-// Browser and Ng support
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule }      from '@angular/core';
+// Import Angular common modules
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
-// Routing support
-import { RouterModule }     from '@angular/router';
-import { AppRoutingModule } from './app-routing.module';
+// Web development
+import { FormsModule }     from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select'
+import { MatDialogModule } from '@angular/material/dialog';
 
-// Import Global Services
+import { PicklistModalComponent } from './picklist-modal.component';
 
-// Import global resources
-import { MatDialogModule }         from '@angular/material/dialog';
-import { HttpClientModule }        from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-// Sub modules for pages
-import { LoginModule }     from './pages/login/login.module';
-import { DashboardModule } from './pages/dashboard/dashboard.module';
-
-// Application level component
-import { AppComponent } from './app.component';
-
-@NgModule(
-{
-    declarations:
-    [
-        AppComponent,
-    ],
+@NgModule({
     imports:
     [
-        BrowserModule,
-        RouterModule.forRoot([]),
-        AppRoutingModule,
+        CommonModule,
 
+        FormsModule,
+        MatSelectModule,
         MatDialogModule,
-        HttpClientModule,
-        BrowserAnimationsModule ,
-
-        DashboardModule,
-        LoginModule,
     ],
-    providers: [],
-    bootstrap:
-    [
-        AppComponent
-    ]
+    declarations:[PicklistModalComponent],
+    exports: [PicklistModalComponent],
+    providers:[],
+    bootstrap: [PicklistModalComponent]
 })
 
-export class AppModule { }
+export class PicklistModalModule { }
