@@ -25,26 +25,20 @@
     this Software without prior written authorization of the copyright holder.
 -->
 
-<div class="sidebarMenu" [ngClass]="minimize ? 'min-bar' : 'max-bar'">
-    <div *ngIf="minimize">
-        <div class="sidebar-minimize-button">
-            <button mat-icon-button  (click)="minimizeEvent()">
-                <mat-icon svgIcon="chevron-double-right"></mat-icon>
-            </button>
-        </div>
-        <div class="sidebar-item-set-label-min">
-            Analysis
-        </div>
-    </div>
+<!-- Title -->
+<h1 mat-dialog-title>{{title}}</h1>
 
-    <div *ngIf="!minimize">
-        <div class="sidebar-minimize-button">
-            <button mat-icon-button  (click)="minimizeEvent()">
-                <mat-icon svgIcon="chevron-double-left"></mat-icon>
-            </button>
-        </div>
-        <div class="sidebar-item-set-label-max">
-            Analysis
-        </div>
-    </div>
+<!-- Menu -->
+<div mat-dialog-content>
+    <mat-form-field appearance="outline">
+    <mat-select (selectionChange)="onSelection($event.value)" [(value)]="currentSelection">
+        <mat-option *ngFor="let item of data.list" [value]="item.key">
+            {{item.value}}
+        </mat-option>
+    </mat-select></mat-form-field>
+</div>
+
+<!-- Close button -->
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">{{closeButtonText}}</button>
 </div>

@@ -26,17 +26,24 @@
 */
 
 // Import Angular common modules
-import { NgModule } from '@angular/core';
+import { NgModule }     from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 // Web development
-import { FormsModule }              from '@angular/forms';
+import { FormsModule }     from '@angular/forms';
+import { MatIconModule }   from '@angular/material/icon';
+import { MatMenuModule }   from '@angular/material/menu';
+import { MatDialogModule } from '@angular/material/dialog';
 
 // Import page sub components
 import { NavbarComponent }    from './navbar.component';
 
 // Custom Services
-import { ThemeService } from 'src/app/services/theme.service';
+import { ThemeService }        from 'src/app/services/theme.service';
+import { NavbarService }       from 'src/app/services/navbar.service';
+
+// Module support
+import { PicklistModalModule } from '../modals/picklist-modal.module';
 
 @NgModule({
     imports:
@@ -44,10 +51,19 @@ import { ThemeService } from 'src/app/services/theme.service';
         CommonModule,
 
         FormsModule,
+        MatIconModule,
+        MatMenuModule,
+        MatDialogModule,
+
+        PicklistModalModule,
     ],
     declarations:[NavbarComponent],
     exports: [NavbarComponent],
-    providers:[ThemeService],
+    providers:
+    [
+        ThemeService,
+        NavbarService
+    ],
     bootstrap: [NavbarComponent]
 })
 

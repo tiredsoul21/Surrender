@@ -1,3 +1,7 @@
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+$material-design-icons-font-directory-path: '~material-design-icons-iconfont/dist/fonts/';
+@import '~material-design-icons-iconfont/src/material-design-icons';
+
 html,body
 {
     height: 100%;
@@ -146,8 +150,88 @@ html,body
     display: table-cell;
 }
  
-
+// Setting to caputre remaining vertical space
 .h-100
 {
   height: 100%
+}
+
+.image-button
+{
+    border: 0;
+    padding: 0;
+    background-color: inherit;
+}
+
+// Material Design
+// Mat Menu
+.mat-menu-panel
+{
+    background-color: var(--colorSecondaryShade5);
+    border: 1px solid var(--colorQuaternaryShade8);
+    color: var(--fontColor);
+
+    mat-icon.mat-icon
+    {
+        color: var(--fontColor) !important;
+    }
+    button.mat-menu-item
+    {
+        color: var(--fontColor);
+    }
+    
+    button.mat-menu-item:hover
+    {
+        background-color: var(--colorSecondaryShade4);
+    }
+}
+
+// Mat Dialog
+.mat-dialog-container
+{
+    background-color: var(--colorSecondaryShade5);
+    border: 1px solid var(--colorQuaternaryShade8);
+    color: var(--fontColor);
+
+    mat-icon.mat-icon
+    {
+        color: var(--fontColor) !important;
+    }
+    div.mat-select-arrow,
+    div.mat-select-value
+    {
+        color: var(--fontColor);
+    }
+}
+
+// Mat Form Field
+div.mat-form-field-outline
+{
+    color: var(--colorTertiaryShade4) !important;
+}
+
+// Mat Select
+div.mat-select-panel-wrap
+{
+    .mat-select-panel
+    {
+        background-color: var(--colorSecondaryShade5);
+        border: 1px solid var(--colorQuaternaryShade8);
+        border-radius: 5px !important;
+    }
+    .mat-option
+    {
+        background-color: var(--colorSecondaryShade5);
+        color: var(--fontColor);
+    }
+    .mat-option:hover
+    {
+        background-color: var(--colorSecondaryShade3) !important;
+        color: var(--fontColor);
+    }
+    .mat-option.mat-active
+    {
+        background-color: var(--colorSecondaryShade4) !important;
+        color: var(--fontColor) !important;
+    }
 }
