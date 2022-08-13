@@ -26,51 +26,40 @@
 */
 
 // Import Angular common modules
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {  ViewChild } from '@angular/core';
+import {  Component } from '@angular/core';
 
-// Import router
-import { DashboardRoutingModule } from './dashboard-routing.module';
+// Support Framework
+import { ToolFrameComponent } from '../tool-frame/tool-frame.component';
 
-// Web development
-import { FormsModule }       from '@angular/forms';
-import { MatIconModule }     from '@angular/material/icon';
-import { MatInputModule }    from '@angular/material/input';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-
-// Import shared resources
-import { NavbarModule } from 'src/app/ui/navbar/navbar.module';
-
-// Import page sub components
-import { DashboardComponent } from './dashboard.component';
-import { SidebarComponent }   from './display/sidebar/sidebar.component';
-
-// Custom Services
-import { ThemeService } from 'src/app/services/theme.service';
-
-@NgModule(
+@Component(
 {
-    imports:
-    [
-        CommonModule,
-        DashboardRoutingModule,
-
-        FormsModule,
-        MatIconModule,
-        MatInputModule,
-        MatCheckboxModule,
-
-        NavbarModule
-    ],
-    providers: [ThemeService],
-    declarations:
-    [
-        DashboardComponent,
-        SidebarComponent,
-    ]
+    selector: 'summary-panel-component',
+    templateUrl: './summary-panel.component.html',
+    styleUrls: ['./summary-panel.component.scss']
 })
 
-export class DashboardModule
-{ 
-    constructor() { }
+export class SummaryPanelComponent extends ToolFrameComponent
+{
+    /** This allows me to see and control my ToolFrame as needed */
+    @ViewChild(ToolFrameComponent) private myToolFrame: ToolFrameComponent;
+
+    constructor()
+    {
+        super();
+    }
+
+    /**
+     * This method lets us connect to the frame and control it as needed
+     * Currently this extends to: closeEvent
+     */
+    ngAfterViewInit()
+    {
+        // If the component is closable, subscribe to the frame closeEvent
+        if (this.isClosable)
+        {
+            // Handle the close event...no data to save, this is info only
+            this.myToolFrame.closeEvent.subscribe( () => this.closeTool() )
+        }
+    }
 }

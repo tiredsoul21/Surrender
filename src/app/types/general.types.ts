@@ -25,21 +25,92 @@
     this Software without prior written authorization of the copyright holder.
 */
 
+// Angular support
+import { ComponentFactory }   from "@angular/core";
+
+// Base Factory Type import
+import { ToolFrameComponent } from "../ui/tools/tool-frame/tool-frame.component";
+
+/**
+ * This interface is intended to provide options that are tied back
+ * to functionality.  That is, an item that if referenced by some manner
+ * provides a callback for action handling.  This can be used in menus
+ * as an example
+ */
 export interface ItemSelectionType
 {
-    // This is some unique ID for the menu item (is needed)
+    /** This is some unique ID for the menu item (if needed) */
     key?: string;
 
-    // This is a proper display name for the item
+    /** This is a proper display name for the item */
     displayName: string;
+    
+    /** This is a description for the Menu Item.  Likely use might be tool tips */
+    description?: string;
 
-    // Is there an mat-icon associated with the menu item? If so add it here.
-    // See https://jossef.github.io/material-design-icons-iconfont/ for list of icons
+    /** 
+     * Is there an mat-icon associated with the menu item? If so add it here.
+     * See https://jossef.github.io/material-design-icons-iconfont/ for list of icons
+     */
     icon?: string;
 
-    // This is a callback function that provides a handle to pass functionality from
-    // a menu or selection item, back to a service
-    selectionCallback: ()=> void;
+    /** 
+     * This is a callback function that provides a handle to pass functionality from
+     * a menu or selection item, back to a service
+     */
+    selectionCallback: (data?: any)=> void;
+}
+
+/**
+ * This interface is to provide a method to pass the ability to generate
+ * components ad-hoc in the UI.  These factories would be generated in the
+ * service level, and provided as inputs into the framework.
+ */
+export interface ComponentSelectionType
+{
+    /** This is some unique ID for the menu item (if needed) */
+    key?: string;
+
+    /** This is a proper display name for the item */
+    displayName: string;
+    
+    /** This is a description for the Component.  Likely use might be tool tips */
+    description?: string;
+
+    /** 
+     * Is there an mat-icon associated with the component? If so add it here.
+     * See https://jossef.github.io/material-design-icons-iconfont/ for list of icons
+     */
+    icon?: string;
+
+    /** This is a factory for rendering components */
+    componentFactory: ComponentFactory<ToolFrameComponent>;
+}
+
+/**
+ * This is one iteraction of a menu type.  This menu type allows
+ * for the selection of a component via a menu item.  Component
+ * Factories are presented as endpoints
+ */
+export interface ComponentMenuType
+{
+    /** This is a proper display name for the group */
+    displayName: string;
+
+    /** 
+     * This is an array that either recursively allows sub menus or 
+     * end item component selection
+     */
+    subGroupItems: Array<ComponentMenuType | ComponentSelectionType>;
+
+    /** This is a description for the Group.  Likely use might be tool tips */
+    description?: string;
+
+    /** 
+     * Is there an mat-icon associated with the group? If so add it here.
+     * See https://jossef.github.io/material-design-icons-iconfont/ for list of icons
+     */
+    icon?: string;
 }
 
 /**
@@ -48,9 +119,9 @@ export interface ItemSelectionType
  */
 export interface StringKeyValuePairs
 {
-    // This is intended to be a unique identifier for the object
+    /** This is intended to be a unique identifier for the object */
     key: string;
 
-    // This is indended to be a useable value, such as a 'Display Value'
+    /** This is indended to be a useable value, such as a 'Display Value' */
     value: string;
 }

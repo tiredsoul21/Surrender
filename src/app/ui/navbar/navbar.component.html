@@ -1,0 +1,97 @@
+<!-- Copyright - License
+
+    bentKnee is true Open Source/Free Software and meet all definitions as such.
+    It means that you are free to modify and redistribute all contents of the UI.
+    You may also freely use bentKnee in your commercial projects.
+
+    COPYRIGHT AND PERMISSION NOTICE
+
+    Copyright (C) 2022, Derrick Cox,
+    All rights reserved.
+
+    Permission to use, copy, modify, and distribute this software for any purpose
+    without fee is hereby granted, provided that the above copyright notice and this
+    permission notice appear in all copies.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+    INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+    PARTICULAR PURPOSE AND NONINFRINGEMENT OF THIRD PARTY RIGHTS. IN NO EVENT SHALL
+    THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+    WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+    WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+    Except as contained in this notice, the name of a copyright holder shall not be
+    used in advertising or otherwise to promote the sale, use or other dealings in
+    this Software without prior written authorization of the copyright holder.
+-->
+
+<div class="all-content">
+    <div class="row navbar-content">
+        <div class="row navbar-brand">
+            <!-- BRAND IMAGE -->
+            <!-- If there are navbar menu items to display, let's make a list -->
+            <div *ngIf="brandMenuItems.length > 0">
+                <button [matMenuTriggerFor]="navbarMenu" class="image-button">
+                    <img class="navbar-brand-image" [src]="brandImage">
+                </button>
+                <mat-menu #navbarMenu="matMenu">
+                    <!-- Loop through the list of menu items give -->
+                    <button mat-menu-item  
+                            *ngFor="let menuItem of brandMenuItems"
+                            (click)="brandMenuCallback(menuItem.selectionCallback)">
+                        <mat-icon>{{menuItem.icon}}</mat-icon>
+                        <span>{{menuItem.displayName}}</span>
+                    </button>
+                </mat-menu>
+            </div>
+            <!-- If there are not menu items, just display an image -->
+            <img class="navbar-brand-image" [src]="brandImage" *ngIf="brandMenuItems.length == 0">
+
+            <!-- BRAND TEXT -->
+            <div class="navbar-brand-text">
+                <h1>{{brandText}}</h1>
+            </div>
+            <!-- Mini Tool Add Menu 3-layers deep -->
+            <button mat-icon-button 
+                    [matMenuTriggerFor]="miniMenu1"
+                    class="mat-icon-button circle-button-border mini-add-btn">
+                <mat-icon>add</mat-icon>
+            </button>
+            <mat-menu #miniMenu1="matMenu">
+                <ng-container *ngFor="let level1Item of miniMenuItems">
+                    <div *ngIf="level1Item.subGroupItems != undefined">
+                        <button mat-menu-item [matMenuTriggerFor]="miniMenu2">{{ level1Item.displayName }}</button>
+                        <mat-menu #miniMenu2="matMenu">
+                            <button mat-menu-item
+                                    *ngFor="let level2Item of level1Item.subGroupItems">
+                                <div *ngIf="level2Item.subGroupItems != undefined">
+                                    <button mat-menu-item [matMenuTriggerFor]="miniMenu3">{{ level2Item.displayName }}</button>
+                                    <mat-menu #miniMenu3="matMenu">
+                                        <button mat-menu-item 
+                                                *ngFor="let level3Item of level2Item.subGroupItems"
+                                                (click)="dropEvent(level3Item.componentFactory)">
+                                            {{ level3Item.displayName }}
+                                        </button>
+                                    </mat-menu>
+                                </div>
+                                <div *ngIf="level2Item.subGroupItems == undefined">
+                                    <button mat-menu-item
+                                            (click)="dropEvent(level2Item.componentFactory)">
+                                        {{ level2Item.displayName }}
+                                    </button>
+                                </div>
+                            </button>
+                        </mat-menu>
+                    </div>
+                    <div *ngIf="level1Item.subGroupItems == undefined">
+                        <button mat-menu-item
+                                (click)="dropEvent(level1Item.componentFactory)">
+                            {{ level1Item.displayName }}
+                        </button>
+                    </div>
+                </ng-container>
+            </mat-menu>
+        </div>
+        <div #dropLead class="drop-container"></div>
+    </div>
+</div>

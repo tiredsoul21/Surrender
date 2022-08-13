@@ -26,45 +26,40 @@
 */
 
 // Import Angular common modules
-import { NgModule }     from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {  ViewChild } from '@angular/core';
+import {  Component } from '@angular/core';
 
-// Web development
-import { FormsModule }     from '@angular/forms';
-import { MatIconModule }   from '@angular/material/icon';
-import { MatMenuModule }   from '@angular/material/menu';
-import { MatDialogModule } from '@angular/material/dialog';
+// Support Framework
+import { ToolFrameComponent } from '../tool-frame/tool-frame.component';
 
-// Import page sub components
-import { NavbarComponent }    from './navbar.component';
-
-// Custom Services
-import { ThemeService }        from 'src/app/services/theme.service';
-import { NavbarService }       from 'src/app/services/navbar.service';
-
-// Module support
-import { PicklistModalModule } from '../modals/picklist-modal.module';
-
-@NgModule({
-    imports:
-    [
-        CommonModule,
-
-        FormsModule,
-        MatIconModule,
-        MatMenuModule,
-        MatDialogModule,
-
-        PicklistModalModule,
-    ],
-    declarations:[NavbarComponent],
-    exports: [NavbarComponent],
-    providers:
-    [
-        ThemeService,
-        NavbarService
-    ],
-    bootstrap: [NavbarComponent]
+@Component(
+{
+    selector: 'info-panel-component',
+    templateUrl: './info-panel.component.html',
+    styleUrls: ['./info-panel.component.scss']
 })
 
-export class NavbarModule { }
+export class InfoPanelComponent extends ToolFrameComponent
+{
+    /** This allows me to see and control my ToolFrame as needed */
+    @ViewChild(ToolFrameComponent) private myToolFrame: ToolFrameComponent;
+
+    constructor()
+    {
+        super();
+    }
+    
+    /**
+     * This method lets us connect to the frame and control it as needed
+     * Currently this extends to: closeEvent
+     */
+    ngAfterViewInit()
+    {
+        // If the component is closable, subscribe to the frame closeEvent
+        if (this.isClosable)
+        {
+            // Handle the close event...no data to save, this is info only
+            this.myToolFrame.closeEvent.subscribe( () => this.closeTool() )
+        }
+    }
+}

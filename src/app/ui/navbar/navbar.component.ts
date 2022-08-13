@@ -27,12 +27,21 @@
 
 // Import Angular common modules
 import { Component } from '@angular/core';
+import { ViewChild } from '@angular/core';
+import { ViewContainerRef } from '@angular/core';
+import { ComponentFactory } from '@angular/core';
+import { ComponentFactoryResolver } from '@angular/core';
 
 // Support services
-import { NavbarService } from 'src/app/services/navbar.service';
+import { NavbarService } from 'src/app/ui/services/navbar.service';
 
 // Custom Types
-import { ItemSelectionType } from 'src/app/types/general.types';
+import { ItemSelectionType }      from '../../types/general.types';
+import { ComponentMenuType }     from '../../types/general.types';
+import { ComponentSelectionType } from '../../types/general.types';
+
+// Base Factory Type import
+import { ToolFrameComponent } from '../tools/tool-frame/tool-frame.component';
 
 @Component(
 {
@@ -53,6 +62,8 @@ import { ItemSelectionType } from 'src/app/types/general.types';
  */
 export class NavbarComponent
 {
+    @ViewChild('dropLead', { read: ViewContainerRef }) dropLead: ViewContainerRef;
+    
     /** My private reference to the brand image path */
     private myBrandImage: string = "";
 
@@ -62,7 +73,10 @@ export class NavbarComponent
     /** This is my personal list of menu items */
     private myBrandMenuItems: Array<ItemSelectionType> = [];
 
-    constructor(readonly navbarService: NavbarService)
+    private myMiniMenuItems: Array<ComponentMenuType | ComponentSelectionType> = []
+
+    constructor(private componentFactoryResolver: ComponentFactoryResolver,
+                readonly navbarService: NavbarService)
     {
         // Pull in the brand image from the service
         this.navbarService.brandImageSubject.subscribe((image:string) =>
@@ -78,6 +92,8 @@ export class NavbarComponent
 
         // Pull in the menu items and their associated callbacks
         this.myBrandMenuItems = this.navbarService.getBrandMenu();
+
+        this.myMiniMenuItems = this.navbarService.getMiniMenu();
     }
 
     /**
@@ -105,6 +121,14 @@ export class NavbarComponent
     }
 
     /**
+     * Get function reference for html form for the brand menu items
+     */
+    get miniMenuItems(): Array<ComponentMenuType | ComponentSelectionType>
+    {
+        return this.myMiniMenuItems;
+    }
+
+    /**
      * This is a wrapper functions that communicates user's selection back
      * to the navbar service for handeling
      * @param callback - re-user provided call back to execute
@@ -113,4 +137,22 @@ export class NavbarComponent
     {
         callback();
     }
+
+    public dropEvent(componentFactory: ComponentFactory<ToolFrameComponent>)
+    {
+        // add the component to the view
+        const componentRef = this.dropLead.createComponent(componentFactory);
+
+        // Configure component to display mini mode
+        componentRef.instance.componentStyle = 'mini';  
+        componentRef.instance.isClosable = true;
+
+        // Register close event
+
+        componentRef.instance.closeEvent.subscribe( () =>
+        {
+            componentRef.destroy();
+        });
+    }
 }
+

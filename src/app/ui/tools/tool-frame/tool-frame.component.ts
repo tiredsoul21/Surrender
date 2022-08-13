@@ -26,51 +26,38 @@
 */
 
 // Import Angular common modules
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Input }        from '@angular/core';
+import { Output }       from '@angular/core';
+import { Component }    from '@angular/core';
+import { EventEmitter } from '@angular/core';
 
-// Import router
-import { DashboardRoutingModule } from './dashboard-routing.module';
 
-// Web development
-import { FormsModule }       from '@angular/forms';
-import { MatIconModule }     from '@angular/material/icon';
-import { MatInputModule }    from '@angular/material/input';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-
-// Import shared resources
-import { NavbarModule } from 'src/app/ui/navbar/navbar.module';
-
-// Import page sub components
-import { DashboardComponent } from './dashboard.component';
-import { SidebarComponent }   from './display/sidebar/sidebar.component';
-
-// Custom Services
-import { ThemeService } from 'src/app/services/theme.service';
-
-@NgModule(
+@Component(
 {
-    imports:
-    [
-        CommonModule,
-        DashboardRoutingModule,
-
-        FormsModule,
-        MatIconModule,
-        MatInputModule,
-        MatCheckboxModule,
-
-        NavbarModule
-    ],
-    providers: [ThemeService],
-    declarations:
-    [
-        DashboardComponent,
-        SidebarComponent,
-    ]
+    selector: 'tool-frame',
+    templateUrl: './tool-frame.component.html',
+    styleUrls: ['./tool-frame.component.scss']
 })
 
-export class DashboardModule
-{ 
+export class ToolFrameComponent
+{
+    /** This input allows for the definition for on the component is rendered */
+    @Input() componentStyle: string;
+
+    /** This input allows for the definition if the component is closable */
+    @Input() isClosable: boolean = false;
+
+    /** An emitter to register when the close event is clicked */
+    @Output() closeEvent = new EventEmitter();
+
     constructor() { }
+
+    /**
+     * This method is a trigger for the user's selection to 'close'
+     * the tool.  This then emits a signal for handling.
+     */
+    closeTool(): void
+    {
+        this.closeEvent.emit();
+    }
 }

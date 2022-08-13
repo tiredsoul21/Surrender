@@ -26,51 +26,48 @@
 */
 
 // Import Angular common modules
-import { NgModule } from '@angular/core';
+import { NgModule }     from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-// Import router
-import { DashboardRoutingModule } from './dashboard-routing.module';
-
 // Web development
-import { FormsModule }       from '@angular/forms';
-import { MatIconModule }     from '@angular/material/icon';
-import { MatInputModule }    from '@angular/material/input';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-
-// Import shared resources
-import { NavbarModule } from 'src/app/ui/navbar/navbar.module';
+import { FormsModule }      from '@angular/forms';
+import { MatIconModule }    from '@angular/material/icon';
+import { MatMenuModule }    from '@angular/material/menu';
+import { MatButtonModule }  from '@angular/material/button';
+import { MatDialogModule }  from '@angular/material/dialog';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 // Import page sub components
-import { DashboardComponent } from './dashboard.component';
-import { SidebarComponent }   from './display/sidebar/sidebar.component';
+import { ToolFrameComponent } from '../tools/tool-frame/tool-frame.component';
+import { InfoPanelComponent }    from './info-panel/info-panel.component';
+import { SummaryPanelComponent } from './status-panel/summary-panel.component';
 
-// Custom Services
-import { ThemeService } from 'src/app/services/theme.service';
-
-@NgModule(
-{
+@NgModule({
     imports:
     [
         CommonModule,
-        DashboardRoutingModule,
 
         FormsModule,
         MatIconModule,
-        MatInputModule,
-        MatCheckboxModule,
-
-        NavbarModule
+        MatMenuModule,
+        MatButtonModule,
+        MatDialogModule,
+        MatTooltipModule,
     ],
-    providers: [ThemeService],
     declarations:
     [
-        DashboardComponent,
-        SidebarComponent,
-    ]
+        ToolFrameComponent,
+        InfoPanelComponent,
+        SummaryPanelComponent
+    ],
+    exports:
+    [
+        ToolFrameComponent,
+        InfoPanelComponent,
+        SummaryPanelComponent
+    ],
+    providers: [],
+    bootstrap: []
 })
 
-export class DashboardModule
-{ 
-    constructor() { }
-}
+export class SurrenderToolsModule { }
