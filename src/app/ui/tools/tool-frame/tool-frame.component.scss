@@ -1,0 +1,15 @@
+.all-content
+{
+    min-width: 100px;
+    border: 2px solid var(--colorPrimaryShade4);
+    border-radius: 8px;
+
+    .close-button
+    {
+        float: right;
+        position: relative;
+        bottom: 10px;
+        left: 10px;
+        background: var(--colorPrimaryShade4);
+    }
+}

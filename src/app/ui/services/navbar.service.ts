@@ -26,19 +26,27 @@
 */
 
 // Common Angular imports
-import { Injectable }      from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable }               from '@angular/core';
+import { ComponentFactoryResolver } from '@angular/core';
+import { BehaviorSubject }          from 'rxjs';
 
 // Support services
-import { ThemeService } from './theme.service';
+import { ThemeService } from '../../services/theme.service';
 
 // Custom types for displays
-import { ItemSelectionType } from '../types/general.types';
+import { ItemSelectionType }      from '../../types/general.types';
+import { ComponentMenuType }      from '../../types/general.types';
+import { ComponentSelectionType } from '../../types/general.types';
+import { PicklistModalDataType }  from '../modals/picklist-modal.component';
 
 // Modal support
 import { MatDialog }              from '@angular/material/dialog';
 import { MatDialogConfig }        from '@angular/material/dialog';
-import { PicklistModalComponent, PicklistModalDataType } from '../common-ui/modals/picklist-modal.component';
+import { PicklistModalComponent } from '../modals/picklist-modal.component';
+
+// Projectable Tools
+import { InfoPanelComponent }     from '../tools/info-panel/info-panel.component';
+import { SummaryPanelComponent }  from '../tools/status-panel/summary-panel.component';
 
 @Injectable()
 
@@ -93,8 +101,63 @@ export class NavbarService
         }
     ]
 
+    /**
+     * This array allows for the re-user to define the components that are displayed
+     * in the addMiniTool menu
+     */
+    private miniMenuItems: Array<ComponentMenuType | ComponentSelectionType> =
+    [
+        {
+            displayName: "Info",
+            subGroupItems: 
+            [
+                {
+                    displayName: "Info Panel",
+                    componentFactory: this.cfr.resolveComponentFactory(InfoPanelComponent),
+                },
+                {
+                    displayName: "Summary Panel",
+                    componentFactory: this.cfr.resolveComponentFactory(SummaryPanelComponent)
+                }
+            ]
+        },
+        {
+            displayName: "Technicals",
+            subGroupItems: 
+            [
+                {
+                    displayName: "stubFun1",
+                    componentFactory: this.cfr.resolveComponentFactory(InfoPanelComponent)
+                },
+                {
+                    displayName: "stubFun2",
+                    componentFactory: this.cfr.resolveComponentFactory(InfoPanelComponent)
+                },
+                {
+                    displayName: "stubGroup",
+                    subGroupItems: 
+                    [
+                        {
+                            displayName: "stubFun3",
+                            componentFactory: this.cfr.resolveComponentFactory(InfoPanelComponent)
+                        },
+                        {
+                            displayName: "stubFun4",
+                            componentFactory: this.cfr.resolveComponentFactory(InfoPanelComponent)
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            displayName: "stubFun5",
+            componentFactory: this.cfr.resolveComponentFactory(InfoPanelComponent)
+        }
+    ]
+
     constructor(private dialog: MatDialog,
-                readonly themeService: ThemeService)
+                readonly themeService: ThemeService,
+                private cfr: ComponentFactoryResolver)
     { }
 
     /**
@@ -132,6 +195,19 @@ export class NavbarService
     public getBrandMenu(): Array<ItemSelectionType>
     {
         return this.brandMenuItems;
+    }
+    /**
+     * This method supplies the menu items to the add mini-tool
+     * menu.  Proper definition should resolve to a menu items that
+     * is linked to a componentType extended from ToolFrame
+     * 
+     * REQUIRED BY navbar.component
+     * 
+     * @returns {Array<ItemSelectionType>} - Navbar menu items list
+     */
+    public getMiniMenu(): Array<ComponentMenuType | ComponentSelectionType>
+    {
+        return this.miniMenuItems;
     }
 
     /**

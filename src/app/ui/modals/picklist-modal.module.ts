@@ -1,4 +1,4 @@
-<!-- Copyright - License
+/* Copyright - License
 
     bentKnee is true Open Source/Free Software and meet all definitions as such.
     It means that you are free to modify and redistribute all contents of the UI.
@@ -9,8 +9,8 @@
     Copyright (C) 2022, Derrick Cox,
     All rights reserved.
 
-    Permission to use, copy, modify, and distribute this software for any purpose
-    without fee is hereby granted, provided that the above copyright notice and this
+    Permission to use, copy, modify, and distribute this software for any purpose with
+    or without fee is hereby granted, provided that the above copyright notice and this
     permission notice appear in all copies.
 
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
@@ -23,22 +23,34 @@
     Except as contained in this notice, the name of a copyright holder shall not be
     used in advertising or otherwise to promote the sale, use or other dealings in
     this Software without prior written authorization of the copyright holder.
--->
+*/
 
-<!-- Title -->
-<h1 mat-dialog-title>{{title}}</h1>
+// Import Angular common modules
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
-<!-- Menu -->
-<div mat-dialog-content>
-    <mat-form-field appearance="outline">
-    <mat-select (selectionChange)="onSelection($event.value)" [(value)]="currentSelection">
-        <mat-option *ngFor="let item of data.list" [value]="item.key">
-            {{item.value}}
-        </mat-option>
-    </mat-select></mat-form-field>
-</div>
+// Web development
+import { FormsModule }     from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select'
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
 
-<!-- Close button -->
-<div mat-dialog-actions>
-    <button mat-button (click)="onNoClick()">{{closeButtonText}}</button>
-</div>
+import { PicklistModalComponent } from './picklist-modal.component';
+
+@NgModule({
+    imports:
+    [
+        CommonModule,
+
+        FormsModule,
+        MatSelectModule,
+        MatButtonModule,
+        MatDialogModule,
+    ],
+    declarations:[PicklistModalComponent],
+    exports: [PicklistModalComponent],
+    providers:[],
+    bootstrap: [PicklistModalComponent]
+})
+
+export class PicklistModalModule { }

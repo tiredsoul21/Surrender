@@ -26,15 +26,26 @@
 */
 
 // Import Angular common modules
-import { NgModule } from '@angular/core';
+import { NgModule }     from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 // Web development
-import { FormsModule }     from '@angular/forms';
-import { MatSelectModule } from '@angular/material/select'
-import { MatDialogModule } from '@angular/material/dialog';
+import { FormsModule }      from '@angular/forms';
+import { MatIconModule }    from '@angular/material/icon';
+import { MatMenuModule }    from '@angular/material/menu';
+import { MatButtonModule }  from '@angular/material/button';
+import { MatDialogModule }  from '@angular/material/dialog';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
-import { PicklistModalComponent } from './picklist-modal.component';
+// Import page sub components
+import { NavbarComponent }    from './navbar.component';
+
+// Custom Services
+import { ThemeService }        from 'src/app/services/theme.service';
+import { NavbarService }       from 'src/app/ui/services/navbar.service';
+
+// Module support
+import { PicklistModalModule }   from '../modals/picklist-modal.module';
 
 @NgModule({
     imports:
@@ -42,13 +53,28 @@ import { PicklistModalComponent } from './picklist-modal.component';
         CommonModule,
 
         FormsModule,
-        MatSelectModule,
+        MatIconModule,
+        MatMenuModule,
+        MatButtonModule,
         MatDialogModule,
+        MatTooltipModule,
+
+        PicklistModalModule,
     ],
-    declarations:[PicklistModalComponent],
-    exports: [PicklistModalComponent],
-    providers:[],
-    bootstrap: [PicklistModalComponent]
+    declarations:
+    [
+        NavbarComponent
+    ],
+    exports:
+    [
+        NavbarComponent
+    ],
+    providers:
+    [
+        ThemeService,
+        NavbarService
+    ],
+    bootstrap: [NavbarComponent]
 })
 
-export class PicklistModalModule { }
+export class NavbarModule { }

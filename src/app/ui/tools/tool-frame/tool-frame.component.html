@@ -24,31 +24,16 @@
     used in advertising or otherwise to promote the sale, use or other dealings in
     this Software without prior written authorization of the copyright holder.
 -->
+<div class="h-100 all-content"
+     *ngIf="componentStyle=='mini'">
+    <!-- Display close button if closable -->
+    <button mat-icon-button
+            class="sm-circle-button-border close-button"
+            (click)="closeTool()"
+            *ngIf="isClosable">
+            <mat-icon>close</mat-icon>
+    </button>
 
-<div class="navbar-content">
-    <div class="row navbar-brand">
-        <!-- BRAND IMAGE -->
-        <!-- If there are navbar menu items to display, let's make a list -->
-        <div *ngIf="brandMenuItems.length > 0">
-            <button [matMenuTriggerFor]="navbarMenu" class="image-button">
-                <img class="navbar-brand-image" [src]="brandImage">
-            </button>
-            <mat-menu #navbarMenu="matMenu">
-                <!-- Loop through the list of menu items give -->
-                <button mat-menu-item  
-                        *ngFor="let menuItem of brandMenuItems"
-                        (click)="brandMenuCallback(menuItem.selectionCallback)">
-                    <mat-icon>{{menuItem.icon}}</mat-icon>
-                    <span>{{menuItem.displayName}}</span>
-                </button>
-            </mat-menu>
-        </div>
-        <!-- If there are not menu items, just display an image -->
-        <img class="navbar-brand-image" [src]="brandImage" *ngIf="brandMenuItems.length == 0">
-
-        <!-- BRAND TEXT -->
-        <div class="navbar-brand-text">
-            <h1>{{brandText}}</h1>
-        </div>
-    </div>
+    <!-- Content projection for child components -->
+    <ng-content select="[tool-frame-content]"></ng-content>
 </div>
