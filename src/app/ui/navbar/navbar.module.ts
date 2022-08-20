@@ -30,7 +30,6 @@ import { NgModule }     from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 // Web development
-import { FormsModule }      from '@angular/forms';
 import { MatIconModule }    from '@angular/material/icon';
 import { MatMenuModule }    from '@angular/material/menu';
 import { MatButtonModule }  from '@angular/material/button';
@@ -52,7 +51,6 @@ import { PicklistModalModule }   from '../modals/picklist-modal.module';
     [
         CommonModule,
 
-        FormsModule,
         MatIconModule,
         MatMenuModule,
         MatButtonModule,

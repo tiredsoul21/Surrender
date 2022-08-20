@@ -28,16 +28,16 @@
 // Common Angular imports
 import { Injectable }               from '@angular/core';
 import { ComponentFactoryResolver } from '@angular/core';
-import { BehaviorSubject }          from 'rxjs';
 
 // Support services
 import { ThemeService } from '../../services/theme.service';
 
 // Custom types for displays
-import { ItemSelectionType }      from '../../types/general.types';
-import { ComponentMenuType }      from '../../types/general.types';
-import { ComponentSelectionType } from '../../types/general.types';
-import { PicklistModalDataType }  from '../modals/picklist-modal.component';
+import { NavbarOptions }         from '../types/ui.types';
+import { ItemSelection }         from '../../types/general.types';
+import { ComponentMenuItem }     from '../../types/general.types';
+import { ComponentMenuGroup }    from '../../types/general.types';
+import { PicklistModalDataType } from '../modals/picklist-modal.component';
 
 // Modal support
 import { MatDialog }              from '@angular/material/dialog';
@@ -50,44 +50,33 @@ import { SummaryPanelComponent }  from '../tools/status-panel/summary-panel.comp
 
 @Injectable()
 
-/** 
+/**
  * This navbar service allows for a re-user to customize the brand image,
  * the brand text, and the corresponding dropdown menu that generates from
- * clicking the brand image.  
- * 
+ * clicking the brand image.
+ *
  * The menu items allow for the re-user
  * to specify specific functionality assigned to a menu item.  These callback
  * functions must be passed into the menu items.  The menu items don't require
  * an icon to be define
- * 
+ *
  * Methods and BehaviorSubjects that are required by the navbar component are
  * specifically labeled with 'REQUIRED BY'
  */
 export class NavbarService
 {
-    /** My path relative to /src for navbar brand image */
-    private brandImage: string = "/assets/images/innovation.jpg";
-
-    /** My record of navbar brand text */
-    private brandText: string = "On Bent Knee";
-
-    /**
-     * The brand image subscription
-     * REQUIRED BY navbar.component
-     */
-    public brandImageSubject: BehaviorSubject<string> = new BehaviorSubject(this.brandImage);
-
-    /**
-     * The brand text subscription
-     * REQUIRED BY navbar.component
-     */
-    public brandTextSubject: BehaviorSubject<string> = new BehaviorSubject(this.brandText);
+    /** Options associated with display and response of sidebar */
+    private navbarOptions: NavbarOptions =
+    {
+        brandImage: "/assets/images/innovation.jpg",
+        brandText: "On Bent Knee"
+    }
 
     /**
      * This array allows the re-user to define the navbar menu items and callbacks
      * see: https://jossef.github.io/material-design-icons-iconfont/ for list of icons
      */
-    private brandMenuItems: Array<ItemSelectionType> =
+    private brandMenuItems: Array<ItemSelection> =
     [
         {
             displayName: 'Select Theme',
@@ -105,11 +94,11 @@ export class NavbarService
      * This array allows for the re-user to define the components that are displayed
      * in the addMiniTool menu
      */
-    private miniMenuItems: Array<ComponentMenuType | ComponentSelectionType> =
+    private miniMenuItems: Array<ComponentMenuGroup | ComponentMenuItem> =
     [
         {
             displayName: "Info",
-            subGroupItems: 
+            subGroupItems:
             [
                 {
                     displayName: "Info Panel",
@@ -123,7 +112,7 @@ export class NavbarService
         },
         {
             displayName: "Technicals",
-            subGroupItems: 
+            subGroupItems:
             [
                 {
                     displayName: "stubFun1",
@@ -135,7 +124,7 @@ export class NavbarService
                 },
                 {
                     displayName: "stubGroup",
-                    subGroupItems: 
+                    subGroupItems:
                     [
                         {
                             displayName: "stubFun3",
@@ -161,25 +150,17 @@ export class NavbarService
     { }
 
     /**
-     * This method sets the navbar service image reference
-     * and then updates the subject
-     * @param {string} imagePath - desired brand image path
+     * Transmit the navbar options to the component.  Items from the options
+     * left blank are assumed default, and sending null assumes all default
+     * options.
+     *
+     * REQUIRED BY navbar.component
+     *
+     * @returns {NavbarOptions} - specified options for navbar
      */
-    public setBrandImage(imagePath: string): void
+    public getNavbarOptions(): NavbarOptions
     {
-        this.brandImage = imagePath;
-        this.brandImageSubject.next(this.brandImage);
-    }
-
-    /**
-     * This method sets the navbar service text and then
-     * updates the subject
-     * @param {string} text - desired brand text
-     */
-    public setBrandText(text: string): void
-    {
-        this.brandText = text;
-        this.brandTextSubject.next(this.brandText);
+        return this.navbarOptions;
     }
 
     /**
@@ -187,25 +168,26 @@ export class NavbarService
      * Callbacks provided should be wholely contained in this service,
      * without variable dependancy.  That is, the menu items, communicate
      * only what the user wishes to do, and then you do it here.
-     * 
+     *
      * REQUIRED BY navbar.component
-     * 
-     * @returns {Array<ItemSelectionType>} - Navbar menu items list
+     *
+     * @returns {Array<ItemSelection>} - Navbar menu items list
      */
-    public getBrandMenu(): Array<ItemSelectionType>
+    public getBrandMenu(): Array<ItemSelection>
     {
         return this.brandMenuItems;
     }
+
     /**
      * This method supplies the menu items to the add mini-tool
      * menu.  Proper definition should resolve to a menu items that
      * is linked to a componentType extended from ToolFrame
-     * 
+     *
      * REQUIRED BY navbar.component
-     * 
-     * @returns {Array<ItemSelectionType>} - Navbar menu items list
+     *
+     * @returns {Array<ItemSelection>} - Navbar menu items list
      */
-    public getMiniMenu(): Array<ComponentMenuType | ComponentSelectionType>
+    public getMiniMenu(): Array<ComponentMenuGroup | ComponentMenuItem>
     {
         return this.miniMenuItems;
     }
@@ -219,7 +201,7 @@ export class NavbarService
     {
         // Configure our dialog box to add our themes
         const dialogConfig = new MatDialogConfig();
-        let picklistData: PicklistModalDataType = 
+        let picklistData: PicklistModalDataType =
         {
             title: "Select Theme:",
             closeButtonText: "Cancel",
@@ -230,7 +212,7 @@ export class NavbarService
 
         // Open dialog
         const dialogRef = this.dialog.open(PicklistModalComponent, dialogConfig);
-      
+
         // Process response from user
         dialogRef.afterClosed().subscribe(result =>
         {

@@ -37,24 +37,24 @@ import { ToolFrameComponent } from "../ui/tools/tool-frame/tool-frame.component"
  * provides a callback for action handling.  This can be used in menus
  * as an example
  */
-export interface ItemSelectionType
+export interface ItemSelection
 {
     /** This is some unique ID for the menu item (if needed) */
     key?: string;
 
     /** This is a proper display name for the item */
     displayName: string;
-    
+
     /** This is a description for the Menu Item.  Likely use might be tool tips */
     description?: string;
 
-    /** 
+    /**
      * Is there an mat-icon associated with the menu item? If so add it here.
      * See https://jossef.github.io/material-design-icons-iconfont/ for list of icons
      */
     icon?: string;
 
-    /** 
+    /**
      * This is a callback function that provides a handle to pass functionality from
      * a menu or selection item, back to a service
      */
@@ -66,18 +66,18 @@ export interface ItemSelectionType
  * components ad-hoc in the UI.  These factories would be generated in the
  * service level, and provided as inputs into the framework.
  */
-export interface ComponentSelectionType
+export interface ComponentMenuItem
 {
     /** This is some unique ID for the menu item (if needed) */
     key?: string;
 
     /** This is a proper display name for the item */
     displayName: string;
-    
+
     /** This is a description for the Component.  Likely use might be tool tips */
     description?: string;
 
-    /** 
+    /**
      * Is there an mat-icon associated with the component? If so add it here.
      * See https://jossef.github.io/material-design-icons-iconfont/ for list of icons
      */
@@ -92,25 +92,57 @@ export interface ComponentSelectionType
  * for the selection of a component via a menu item.  Component
  * Factories are presented as endpoints
  */
-export interface ComponentMenuType
+export interface ComponentMenuGroup
 {
     /** This is a proper display name for the group */
     displayName: string;
 
-    /** 
-     * This is an array that either recursively allows sub menus or 
+    /**
+     * This is an array that either recursively allows sub menus or
      * end item component selection
      */
-    subGroupItems: Array<ComponentMenuType | ComponentSelectionType>;
+    subGroupItems: Array<ComponentMenuGroup | ComponentMenuItem>;
 
     /** This is a description for the Group.  Likely use might be tool tips */
     description?: string;
 
-    /** 
+    /**
      * Is there an mat-icon associated with the group? If so add it here.
      * See https://jossef.github.io/material-design-icons-iconfont/ for list of icons
      */
     icon?: string;
+}
+
+/**
+ * The interface is an extension of the ComponentMenuItem, but
+ * the icon is a required parameter.
+ */
+export interface ComponentIconMenuItem extends ComponentMenuItem
+{
+    /**
+     * Is there an mat-icon associated with the group? If so add it here.
+     * See https://jossef.github.io/material-design-icons-iconfont/ for list of icons
+     */
+    icon: string;
+}
+
+/**
+ * The interface is an extension of the ComponentMenuGroup, but
+ * the icon is a require field for the group and successive children
+ */
+export interface ComponentIconMenuGroup extends ComponentMenuGroup
+{
+    /**
+     * Is there an mat-icon associated with the group? If so add it here.
+     * See https://jossef.github.io/material-design-icons-iconfont/ for list of icons
+     */
+    icon: string;
+
+    /**
+     * This is an array that either recursively allows sub menus or
+     * end item component selection
+     */
+    subGroupItems: Array<ComponentIconMenuGroup | ComponentIconMenuItem>;
 }
 
 /**

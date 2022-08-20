@@ -25,47 +25,40 @@
     this Software without prior written authorization of the copyright holder.
 */
 
-import { Component } from "@angular/core";
-import { ChangeDetectionStrategy } from '@angular/core';
-import { ContentChild } from '@angular/core';
-import { TemplateRef } from '@angular/core';
+// Import Angular common modules
+import { NgModule }     from '@angular/core';
+import { CommonModule } from '@angular/common';
 
-@Component(
-{
-    selector: "sidebar",
-    templateUrl: "./sidebar.component.html",
-    styleUrls: ["./sidebar.component.scss"],
-    changeDetection: ChangeDetectionStrategy.OnPush
+// Web development
+import { MatIconModule }      from '@angular/material/icon';
+import { MatMenuModule }      from '@angular/material/menu';
+import { MatButtonModule }    from '@angular/material/button';
+import { MatTooltipModule }   from '@angular/material/tooltip';
+import { MatExpansionModule } from '@angular/material/expansion';
+
+// Import page sub components
+import { SidebarComponent }    from './sidebar.component';
+
+// Custom Services
+import { SidebarService } from '../services/sidebar.service';
+
+@NgModule({
+    imports:
+    [
+        // Support modules
+        CommonModule,
+
+        // Design Imports
+        MatIconModule,
+        MatMenuModule,
+        MatButtonModule,
+        MatTooltipModule,
+        MatExpansionModule
+    ],
+    declarations: [SidebarComponent],
+    exports: [SidebarComponent],
+    providers: [SidebarService],
+    bootstrap: [SidebarComponent]
 })
 
-export class SidebarComponent
-{
-    @ContentChild(TemplateRef)
-    public widgetTypeTemplate: TemplateRef<any>;
-
-    name = "Angular Toggle Show Hide";
-    showMyContainer: boolean = false;
-
-    minimize: boolean = false;
-    statusLink: boolean = false;
-
-    minimizeEvent()
-    {
-        this.minimize = !this.minimize;
-
-        if (this.statusLink)
-        {
-            setTimeout(() =>
-            {
-                this.statusLink = false;
-            }, 230);
-        }
-        else
-        {
-          this.statusLink = true;
-        }
-    }
-
-    constructor( ) {}
-}
-
+export class SidebarModule { }

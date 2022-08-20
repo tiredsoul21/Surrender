@@ -1,4 +1,4 @@
-<!-- Copyright - License
+/* Copyright - License
 
     bentKnee is true Open Source/Free Software and meet all definitions as such.
     It means that you are free to modify and redistribute all contents of the UI.
@@ -9,8 +9,8 @@
     Copyright (C) 2022, Derrick Cox,
     All rights reserved.
 
-    Permission to use, copy, modify, and distribute this software for any purpose
-    without fee is hereby granted, provided that the above copyright notice and this
+    Permission to use, copy, modify, and distribute this software for any purpose with
+    or without fee is hereby granted, provided that the above copyright notice and this
     permission notice appear in all copies.
 
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
@@ -23,28 +23,30 @@
     Except as contained in this notice, the name of a copyright holder shall not be
     used in advertising or otherwise to promote the sale, use or other dealings in
     this Software without prior written authorization of the copyright holder.
--->
+*/
 
-<div class="sidebarMenu" [ngClass]="minimize ? 'min-bar' : 'max-bar'">
-    <div *ngIf="minimize">
-        <div class="sidebar-minimize-button">
-            <button mat-icon-button  (click)="minimizeEvent()">
-                <mat-icon svgIcon="chevron-double-right"></mat-icon>
-            </button>
-        </div>
-        <div class="sidebar-item-set-label-min">
-            Analysis
-        </div>
-    </div>
+/**
+ * This interface allows for customization of the sidebar component
+ * Excluded elements are assumed default
+ */
+export interface SidebarOptions
+{
+    /** This is the transition speed form minimize / expanded in milliseconds */
+    sidebarTransition?: number;
 
-    <div *ngIf="!minimize">
-        <div class="sidebar-minimize-button">
-            <button mat-icon-button  (click)="minimizeEvent()">
-                <mat-icon svgIcon="chevron-double-left"></mat-icon>
-            </button>
-        </div>
-        <div class="sidebar-item-set-label-max">
-            Analysis
-        </div>
-    </div>
-</div>
+    /** This is the title that is displayed at the top of the Sidebar */
+    sidebarHeader?: string;
+}
+
+/**
+ * This interface allows for customization of the navebar component
+ * Excluded elements are assumed default
+ */
+export interface NavbarOptions
+{
+    /** Image used as the Site Logo (path to) */
+    brandImage?: string;
+
+    /** This is the Banner main text of Site Logo */
+    brandText?: string;
+}

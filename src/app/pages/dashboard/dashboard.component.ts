@@ -29,7 +29,7 @@
 import { AfterViewInit, Component } from '@angular/core';
 
 // Custom Services
-import { ThemeService } from 'src/app/services/theme.service';
+import { ThemeService } from '../../services/theme.service';
 
 // Add Custom Support services
 
