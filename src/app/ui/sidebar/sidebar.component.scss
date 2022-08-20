@@ -1,0 +1,109 @@
+.sidebarMenu
+{
+    background-color: var(--colorPrimaryShade5);
+    width: auto;
+    height: 100%;
+    color: var(--fontColor);
+    .sidebar-minimize-button
+    {
+        float: right;
+        .mat-icon
+        {
+            font-size: 30px;
+            color: var(--fontColor);
+        }
+    }
+    .sidebar-item-set-label
+    {
+        height: 36px;
+        line-height: 36px;
+        text-align: center;
+        font-size:24px;
+        font-weight: bold;
+        color: var(--fontColor);
+    }
+    .title
+    {
+        justify-content: space-between;
+        padding: 8px;
+    }
+    .drop-list-row
+    {
+        padding-left: 8px;
+        padding-right: 8px;
+        width: 100%;
+        .icon-btn
+        {
+            border-radius: 5px;
+            width: 100%;
+            .drop-list-btn
+            {
+                align-items: center;
+                flex-flow: row;
+                .drop-list-text
+                {
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    max-width: 75%;
+                    margin-left: 5px;
+                    font-size: 16px;
+                }
+            }
+        }
+    }
+    .panel-text
+    {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 75%;
+        margin-left: 5px;
+        font-size: 18px;
+    }
+    .panel-btn
+    {
+        flex: auto;
+        border-radius: 5px;
+        .panel-row
+        {
+            align-items: center;
+        }
+    }
+    .mini-component-btn
+    {
+        margin-bottom: 10px;
+    }
+}
+
+.max-bar
+{
+    width: 200px;
+}
+
+.min-bar
+{
+    width: 60px;
+    padding-left: 8px;
+    .sidebar-minimize-button
+    {
+        padding: 8px;
+    }
+}
+
+::ng-deep .cdk-overlay-container
+{
+    .sidebar-max-exp-menu
+    {
+        position: relative !important;
+        left: 165px;
+        bottom: 30px;
+    }
+
+    .sidebar-min-exp-menu
+    {
+        position: relative !important;
+        left: 45px;
+        bottom: 40px;
+    }
+}

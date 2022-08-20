@@ -31,12 +31,16 @@
             <!-- BRAND IMAGE -->
             <!-- If there are navbar menu items to display, let's make a list -->
             <div *ngIf="brandMenuItems.length > 0">
-                <button [matMenuTriggerFor]="navbarMenu" class="image-button">
+                <button [matMenuTriggerFor]="navbarMenu"
+                        class="image-button"
+                        matTooltip="Main Menu"
+                        matTooltipShowDelay="1000"
+                        matTooltipPosition="right">
                     <img class="navbar-brand-image" [src]="brandImage">
                 </button>
                 <mat-menu #navbarMenu="matMenu">
                     <!-- Loop through the list of menu items give -->
-                    <button mat-menu-item  
+                    <button mat-menu-item
                             *ngFor="let menuItem of brandMenuItems"
                             (click)="brandMenuCallback(menuItem.selectionCallback)">
                         <mat-icon>{{menuItem.icon}}</mat-icon>
@@ -52,41 +56,54 @@
                 <h1>{{brandText}}</h1>
             </div>
             <!-- Mini Tool Add Menu 3-layers deep -->
-            <button mat-icon-button 
+            <button mat-icon-button
                     [matMenuTriggerFor]="miniMenu1"
-                    class="mat-icon-button circle-button-border mini-add-btn">
+                    class="mat-icon-button circle-button-border mini-add-btn"
+                    matTooltip="Show Deployable Tools"
+                    matTooltipShowDelay="1000"
+                    matTooltipPosition="right">
                 <mat-icon>add</mat-icon>
             </button>
+
+            <!-- Primary Menu Level -->
             <mat-menu #miniMenu1="matMenu">
-                <ng-container *ngFor="let level1Item of miniMenuItems">
-                    <div *ngIf="level1Item.subGroupItems != undefined">
-                        <button mat-menu-item [matMenuTriggerFor]="miniMenu2">{{ level1Item.displayName }}</button>
+                <ng-container *ngFor="let miniMenu1Item of miniMenuItems">
+                    <div *ngIf="hasSubItems(miniMenu1Item)">
+
+                        <!-- Secondary Menu Level -->
+                        <button mat-menu-item [matMenuTriggerFor]="miniMenu2">{{ miniMenu1Item.displayName }}</button>
                         <mat-menu #miniMenu2="matMenu">
                             <button mat-menu-item
-                                    *ngFor="let level2Item of level1Item.subGroupItems">
-                                <div *ngIf="level2Item.subGroupItems != undefined">
-                                    <button mat-menu-item [matMenuTriggerFor]="miniMenu3">{{ level2Item.displayName }}</button>
+                                    *ngFor="let miniMenu2Item of miniMenu1Item.subGroupItems">
+
+                                <!-- Tertiary Menu Level -->
+                                <div *ngIf="hasSubItems(miniMenu2Item)">
+                                    <button mat-menu-item [matMenuTriggerFor]="miniMenu3">{{ miniMenu2Item.displayName }}</button>
                                     <mat-menu #miniMenu3="matMenu">
-                                        <button mat-menu-item 
-                                                *ngFor="let level3Item of level2Item.subGroupItems"
-                                                (click)="dropEvent(level3Item.componentFactory)">
-                                            {{ level3Item.displayName }}
+                                        <button mat-menu-item
+                                                *ngFor="let miniMenu3Item of miniMenu2Item.subGroupItems"
+                                                (click)="dropEvent(miniMenu3Item.componentFactory)">
+                                            {{ miniMenu3Item.displayName }}
                                         </button>
                                     </mat-menu>
                                 </div>
-                                <div *ngIf="level2Item.subGroupItems == undefined">
+
+                                <!-- Secondary Menu Buttons -->
+                                <div *ngIf="!hasSubItems(miniMenu2Item)">
                                     <button mat-menu-item
-                                            (click)="dropEvent(level2Item.componentFactory)">
-                                        {{ level2Item.displayName }}
+                                            (click)="dropEvent(miniMenu2Item.componentFactory)">
+                                        {{ miniMenu2Item.displayName }}
                                     </button>
                                 </div>
                             </button>
                         </mat-menu>
                     </div>
-                    <div *ngIf="level1Item.subGroupItems == undefined">
+
+                    <!-- Primary Menu Buttons -->
+                    <div *ngIf="!hasSubItems(miniMenu1Item)">
                         <button mat-menu-item
-                                (click)="dropEvent(level1Item.componentFactory)">
-                            {{ level1Item.displayName }}
+                                (click)="dropEvent(miniMenu1Item.componentFactory)">
+                            {{ miniMenu1Item.displayName }}
                         </button>
                     </div>
                 </ng-container>

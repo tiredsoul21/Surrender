@@ -26,27 +26,21 @@
 */
 
 // Import Angular common modules
-import { NgModule } from '@angular/core';
+import { NgModule }     from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 // Import router
 import { DashboardRoutingModule } from './dashboard-routing.module';
 
-// Web development
-import { FormsModule }       from '@angular/forms';
-import { MatIconModule }     from '@angular/material/icon';
-import { MatInputModule }    from '@angular/material/input';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-
 // Import shared resources
-import { NavbarModule } from 'src/app/ui/navbar/navbar.module';
+import { NavbarModule }  from '../../ui/navbar/navbar.module';
+import { SidebarModule } from '../../ui/sidebar/sidebar.module';
 
 // Import page sub components
 import { DashboardComponent } from './dashboard.component';
-import { SidebarComponent }   from './display/sidebar/sidebar.component';
 
 // Custom Services
-import { ThemeService } from 'src/app/services/theme.service';
+import { ThemeService } from '../../services/theme.service';
 
 @NgModule(
 {
@@ -55,22 +49,17 @@ import { ThemeService } from 'src/app/services/theme.service';
         CommonModule,
         DashboardRoutingModule,
 
-        FormsModule,
-        MatIconModule,
-        MatInputModule,
-        MatCheckboxModule,
-
-        NavbarModule
+        NavbarModule,
+        SidebarModule
     ],
     providers: [ThemeService],
     declarations:
     [
         DashboardComponent,
-        SidebarComponent,
     ]
 })
 
 export class DashboardModule
-{ 
+{
     constructor() { }
 }

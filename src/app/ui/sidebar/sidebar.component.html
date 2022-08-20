@@ -1,0 +1,169 @@
+<!-- Copyright - License
+
+    bentKnee is true Open Source/Free Software and meet all definitions as such.
+    It means that you are free to modify and redistribute all contents of the UI.
+    You may also freely use bentKnee in your commercial projects.
+
+    COPYRIGHT AND PERMISSION NOTICE
+
+    Copyright (C) 2022, Derrick Cox,
+    All rights reserved.
+
+    Permission to use, copy, modify, and distribute this software for any purpose
+    without fee is hereby granted, provided that the above copyright notice and this
+    permission notice appear in all copies.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+    INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+    PARTICULAR PURPOSE AND NONINFRINGEMENT OF THIRD PARTY RIGHTS. IN NO EVENT SHALL
+    THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+    WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+    WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+    Except as contained in this notice, the name of a copyright holder shall not be
+    used in advertising or otherwise to promote the sale, use or other dealings in
+    this Software without prior written authorization of the copyright holder.
+-->
+
+<div class="sidebarMenu"
+     [ngClass]="isMinimized ? 'min-bar' : 'max-bar'"
+     [ngStyle]="{'transition': transitionSpeed}">
+
+    <!-- Mini Menu Design -->
+    <div *ngIf="isMinimized">
+
+        <!-- Maximize Button -->
+        <div class="row sidebar-minimize-button">
+            <button mat-icon-button
+                    (click)="minimizeEvent()"
+                    matTooltip="Expand Toolbar"
+                    matTooltipShowDelay="1000"
+                    matTooltipPosition="right">
+                <mat-icon>keyboard_double_arrow_right</mat-icon>
+            </button>
+        </div>
+        <div *ngFor="let item of sidebarMenuItems">
+
+            <!-- First Level Menu -->
+            <button mat-icon-button
+                    [matTooltip]="item.displayName"
+                    matTooltipPosition="right"
+                    class="square-button-border mini-component-btn"
+                    *ngIf="!hasSubItems(item)">
+                <mat-icon>{{item.icon}}</mat-icon>
+            </button>
+            <button mat-icon-button
+                    [matTooltip]="item.displayName"
+                    matTooltipPosition="right"
+                    class="square-button-border mini-component-btn"
+                    *ngIf="hasSubItems(item)"
+                    [matMenuTriggerFor]="menuLayer2">
+                <mat-icon>{{item.icon}}</mat-icon>
+            </button>
+
+            <!-- Secondary Level Menu -->
+            <mat-menu #menuLayer2="matMenu" class="sidebar-min-exp-menu">
+                <button mat-menu-item *ngFor="let level2Item of item.subGroupItems">
+                    <div *ngIf="level2Item.subGroupItems != undefined">
+                        <button mat-menu-item [matMenuTriggerFor]="miniMenu3">{{ level2Item.displayName }}</button>
+
+                        <!-- Tertiary Level Menu -->
+                        <mat-menu #miniMenu3="matMenu">
+                            <button mat-menu-item
+                                    *ngFor="let level3Item of level2Item.subGroupItems">
+                                {{ level3Item.displayName }}
+                            </button>
+                        </mat-menu>
+                    </div>
+
+                    <!-- Secondary Level Menu Buttons -->
+                    <div *ngIf="level2Item.subGroupItems == undefined">
+                        <button mat-menu-item>
+                            {{ level2Item.displayName }}
+                        </button>
+                    </div>
+                </button>
+            </mat-menu>
+        </div>
+    </div>
+
+    <!-- Max Menu Design -->
+    <div *ngIf="!isMinimized">
+        <div class="row title">
+
+            <!-- Header -->
+            <div *ngIf="isSidebarReady" class="sidebar-item-set-label">
+                {{displayHeader}}
+            </div>
+            <div *ngIf="!isSidebarReady"></div>
+
+            <!-- Minimize Button -->
+            <div class="sidebar-minimize-button">
+                <button mat-icon-button
+                        (click)="minimizeEvent()"
+                        matTooltip="Minimize Toolbar"
+                        matTooltipShowDelay="1000"
+                        matTooltipPosition="right">
+                    <mat-icon>keyboard_double_arrow_left</mat-icon>
+                </button>
+            </div>
+        </div>
+        <mat-accordion class="prevent-click">
+            <!-- Displayed Priamry Menu -->
+            <mat-expansion-panel *ngFor="let item of sidebarMenuItems"
+                                 [hideToggle]="!hasSubItems(item)"
+                                 displayMode="flat">
+                <!-- First Level Button -->
+                <mat-expansion-panel-header hideToggle
+                                            *ngIf="!hasSubItems(item)"
+                                            #panelH
+                                            (click)="panelH._toggle()">
+                    <button mat-icon-button class="panel-btn">
+                        <div class="row panel-row">
+                            <mat-icon>{{item.icon}}</mat-icon>
+                            <div *ngIf="isSidebarReady" class="panel-text">{{item.displayName}}</div>
+                        </div>
+                    </button>
+                </mat-expansion-panel-header>
+                <mat-expansion-panel-header *ngIf="hasSubItems(item)">
+                    <div class="row">
+                        <mat-icon>{{item.icon}}</mat-icon>
+                        <div *ngIf="isSidebarReady" class="panel-text">{{item.displayName}}</div>
+                    </div>
+                </mat-expansion-panel-header>
+
+                <!-- Second Level Dropdown -->
+                <div *ngFor="let dropListItem of item.subGroupItems" class="row drop-list-row">
+                    <button mat-icon-button class="icon-btn" *ngIf="!hasSubItems(dropListItem)">
+                        <div class="row drop-list-btn">
+                            <div class="row drop-list-btn">
+                                <mat-icon class="drop-icon">{{dropListItem.icon}}</mat-icon>
+                                <div class="drop-list-text">{{dropListItem.displayName}}</div>
+                            </div>
+                        </div>
+                    </button>
+                    <button mat-icon-button class="icon-btn"
+                            *ngIf="hasSubItems(dropListItem)"
+                            [matMenuTriggerFor]="expansionMenu">
+                        <div class="row drop-list-btn">
+                            <div class="row drop-list-btn">
+                                <mat-icon class="drop-icon">{{dropListItem.icon}}</mat-icon>
+                                <div class="drop-list-text">{{dropListItem.displayName}}</div>
+                            </div>
+                            <mat-icon *ngIf="hasSubItems(dropListItem)">arrow_right</mat-icon>
+                        </div>
+                    </button>
+
+                    <!-- Expansion Panel Menu-->
+                    <mat-menu #expansionMenu="matMenu" xPosition="after" class="sidebar-max-exp-menu">
+                        <button mat-menu-item
+                                *ngFor="let expansionItem of dropListItem.subGroupItems">
+                            <mat-icon class="drop-icon">{{expansionItem.icon}}</mat-icon>
+                            <span>{{ expansionItem.displayName }}</span>
+                        </button>
+                    </mat-menu>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+</div>
