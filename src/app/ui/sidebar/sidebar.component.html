@@ -25,7 +25,7 @@
     this Software without prior written authorization of the copyright holder.
 -->
 
-<div class="sidebarMenu"
+<div class="sidebarMenu h-100"
      [ngClass]="isMinimized ? 'min-bar' : 'max-bar'"
      [ngStyle]="{'transition': transitionSpeed}">
 
@@ -44,14 +44,22 @@
         </div>
         <div *ngFor="let item of sidebarMenuItems">
 
-            <!-- First Level Menu -->
+            <!-- First Level Menu (Icons Only) -- If Component -->
             <button mat-icon-button
                     [matTooltip]="item.displayName"
                     matTooltipPosition="right"
                     class="square-button-border mini-component-btn"
                     *ngIf="!hasSubItems(item)">
-                <mat-icon>{{item.icon}}</mat-icon>
+                <div cdkDropList class="field-list" 
+                        id="component-transmitter" 
+                        [cdkDropListConnectedTo]="cdkReceivers">
+                    <div cdkDrag class="field-box-move" [cdkDragData]="item">
+                        <mat-icon>{{item.icon}}</mat-icon>
+                    </div>
+                </div>
             </button>
+
+            <!-- First Level Menu (Icons Only) -- If Group -->
             <button mat-icon-button
                     [matTooltip]="item.displayName"
                     matTooltipPosition="right"
@@ -63,26 +71,48 @@
 
             <!-- Secondary Level Menu -->
             <mat-menu #menuLayer2="matMenu" class="sidebar-min-exp-menu">
-                <button mat-menu-item *ngFor="let level2Item of item.subGroupItems">
-                    <div *ngIf="level2Item.subGroupItems != undefined">
-                        <button mat-menu-item [matMenuTriggerFor]="miniMenu3">{{ level2Item.displayName }}</button>
+                <div (mouseleave)="menuMouseover2 = false; closeMenu()"
+                        (mouseenter)="menuMouseover2=true;" 
+                        *ngFor="let level2Item of item.subGroupItems">
+                 
+                    <!-- Secondary Level Menu Buttons -- If Component -->
+                    <div mat-menu-item cdkDropList class="field-list" 
+                            id="component-transmitter" 
+                            [cdkDropListConnectedTo]="cdkReceivers"
+                            *ngIf="!hasSubItems(level2Item)">
+                        <div cdkDrag class="field-box-move" 
+                            [cdkDragData]="level2Item">
+                            <mat-icon>{{level2Item.icon}}</mat-icon>
+                            <div>{{level2Item.displayName}}</div>
+                        </div>
+                    </div>
 
-                        <!-- Tertiary Level Menu -->
-                        <mat-menu #miniMenu3="matMenu">
-                            <button mat-menu-item
-                                    *ngFor="let level3Item of level2Item.subGroupItems">
-                                {{ level3Item.displayName }}
-                            </button>
+                    <!-- Secondary Level Menu Buttons -- If Group -->
+                    <div mat-menu-item  class="field-list"
+                            [matMenuTriggerFor]="miniMenu3"
+                            *ngIf="hasSubItems(level2Item)">
+                        <div class="field-box">
+                            <mat-icon>{{level2Item.icon}}</mat-icon>
+                            <div>{{level2Item.displayName}}</div>
+                        </div>
+
+                        <!-- Tertiary Level Menu -- Components Only -->
+                        <mat-menu #miniMenu3="matMenu" xPosition="after">
+                            <div mat-menu-item cdkDropList class="field-list" 
+                                    (mouseleave)="menuMouseover3 = false; closeMenu()"
+                                    (mouseenter)="menuMouseover3=true;"
+                                    *ngFor="let level3Item of level2Item.subGroupItems"
+                                    id="component-transmitter" 
+                                    [cdkDropListConnectedTo]="cdkReceivers">
+                                <div cdkDrag class="field-box-move" 
+                                        [cdkDragData]="level3Item">
+                                    <mat-icon>{{level3Item.icon}}</mat-icon>
+                                    <div>{{level3Item.displayName}}</div>
+                                </div>
+                            </div>
                         </mat-menu>
                     </div>
-
-                    <!-- Secondary Level Menu Buttons -->
-                    <div *ngIf="level2Item.subGroupItems == undefined">
-                        <button mat-menu-item>
-                            {{ level2Item.displayName }}
-                        </button>
-                    </div>
-                </button>
+                </div>
             </mat-menu>
         </div>
     </div>
@@ -111,20 +141,24 @@
         <mat-accordion class="prevent-click">
             <!-- Displayed Priamry Menu -->
             <mat-expansion-panel *ngFor="let item of sidebarMenuItems"
-                                 [hideToggle]="!hasSubItems(item)"
-                                 displayMode="flat">
-                <!-- First Level Button -->
-                <mat-expansion-panel-header hideToggle
+                                 [hideToggle]="!hasSubItems(item)">
+                <!-- First Level Button -- If Component -->
+                <mat-expansion-panel-header hideToggle #panelH
                                             *ngIf="!hasSubItems(item)"
-                                            #panelH
                                             (click)="panelH._toggle()">
-                    <button mat-icon-button class="panel-btn">
-                        <div class="row panel-row">
+                    <button mat-icon-button cdkDropList class="icon-btn field-list"
+                            id="component-transmitter" 
+                            [cdkDropListConnectedTo]="cdkReceivers">
+                        <div cdkDrag class="field-box-move" [cdkDragData]="item">
                             <mat-icon>{{item.icon}}</mat-icon>
-                            <div *ngIf="isSidebarReady" class="panel-text">{{item.displayName}}</div>
+                            <div *ngIf="isSidebarReady" class="panel-text">
+                                {{ item.displayName }}
+                            </div>
                         </div>
                     </button>
                 </mat-expansion-panel-header>
+
+                <!-- First Level Button -- If Group -->
                 <mat-expansion-panel-header *ngIf="hasSubItems(item)">
                     <div class="row">
                         <mat-icon>{{item.icon}}</mat-icon>
@@ -133,15 +167,21 @@
                 </mat-expansion-panel-header>
 
                 <!-- Second Level Dropdown -->
-                <div *ngFor="let dropListItem of item.subGroupItems" class="row drop-list-row">
-                    <button mat-icon-button class="icon-btn" *ngIf="!hasSubItems(dropListItem)">
-                        <div class="row drop-list-btn">
-                            <div class="row drop-list-btn">
-                                <mat-icon class="drop-icon">{{dropListItem.icon}}</mat-icon>
-                                <div class="drop-list-text">{{dropListItem.displayName}}</div>
-                            </div>
+                <div *ngFor="let dropListItem of item.subGroupItems">
+
+                    <!-- Second Level Button -- If Component -->
+                    <button mat-icon-button cdkDropList class="icon-btn field-list" 
+                            *ngIf="!hasSubItems(dropListItem)"
+                             id="component-transmitter" 
+                             [cdkDropListConnectedTo]="cdkReceivers">
+                        <div cdkDrag class="field-box-move" 
+                                [cdkDragData]="dropListItem">
+                            <mat-icon>{{dropListItem.icon}}</mat-icon>
+                            <div class="drop-list-text">{{dropListItem.displayName}}</div>
                         </div>
                     </button>
+
+                    <!-- Second Level Button -- If Group -->
                     <button mat-icon-button class="icon-btn"
                             *ngIf="hasSubItems(dropListItem)"
                             [matMenuTriggerFor]="expansionMenu">
@@ -154,13 +194,19 @@
                         </div>
                     </button>
 
-                    <!-- Expansion Panel Menu-->
+                    <!-- Expansion Panel Menu -- Components Only -->
                     <mat-menu #expansionMenu="matMenu" xPosition="after" class="sidebar-max-exp-menu">
-                        <button mat-menu-item
-                                *ngFor="let expansionItem of dropListItem.subGroupItems">
-                            <mat-icon class="drop-icon">{{expansionItem.icon}}</mat-icon>
-                            <span>{{ expansionItem.displayName }}</span>
-                        </button>
+                        <div (mouseleave)="closeMenu();"> 
+                            <div mat-menu-item cdkDropList class="field-list" 
+                                 id="component-transmitter" 
+                                 [cdkDropListConnectedTo]="cdkReceivers"
+                                 *ngFor="let expansionItem of dropListItem.subGroupItems">
+                                <div cdkDrag class="field-box-move" [cdkDragData]="expansionItem">
+                                    <mat-icon>{{expansionItem.icon}}</mat-icon>
+                                    <div>{{expansionItem.displayName}}</div>
+                                </div>
+                            </div>
+                        </div>
                     </mat-menu>
                 </div>
             </mat-expansion-panel>

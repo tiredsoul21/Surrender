@@ -120,7 +120,8 @@ export class SidebarService
     private sidebarOptions: SidebarOptions =
     {
         sidebarHeader: 'Analysis',
-        sidebarTransition: 500
+        sidebarTransition: 500,
+        dragDropRecerivers: [ "component-receiver-navbar"]
     }
 
     constructor(private cfr: ComponentFactoryResolver) { }

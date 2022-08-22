@@ -26,8 +26,9 @@
 */
 
 // Import Angular common modules
-import { NgModule }     from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgModule }       from '@angular/core';
+import { CommonModule }   from '@angular/common';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 // Web development
 import { MatIconModule }    from '@angular/material/icon';
@@ -50,6 +51,7 @@ import { PicklistModalModule }   from '../modals/picklist-modal.module';
     imports:
     [
         CommonModule,
+        DragDropModule,
 
         MatIconModule,
         MatMenuModule,
@@ -59,14 +61,8 @@ import { PicklistModalModule }   from '../modals/picklist-modal.module';
 
         PicklistModalModule,
     ],
-    declarations:
-    [
-        NavbarComponent
-    ],
-    exports:
-    [
-        NavbarComponent
-    ],
+    declarations: [NavbarComponent],
+    exports: [NavbarComponent],
     providers:
     [
         ThemeService,

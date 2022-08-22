@@ -26,8 +26,9 @@
 */
 
 // Import Angular common modules
-import { NgModule }     from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgModule }       from '@angular/core';
+import { CommonModule }   from '@angular/common';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 // Import router
 import { DashboardRoutingModule } from './dashboard-routing.module';
@@ -47,6 +48,7 @@ import { ThemeService } from '../../services/theme.service';
     imports:
     [
         CommonModule,
+        DragDropModule,
         DashboardRoutingModule,
 
         NavbarModule,

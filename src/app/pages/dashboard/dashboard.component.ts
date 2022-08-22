@@ -26,7 +26,8 @@
 */
 
 // Import Angular common modules
-import { AfterViewInit, Component } from '@angular/core';
+import { Component }     from '@angular/core';
+import { AfterViewInit } from '@angular/core';
 
 // Custom Services
 import { ThemeService } from '../../services/theme.service';
@@ -41,9 +42,7 @@ import { ThemeService } from '../../services/theme.service';
 })
 export class DashboardComponent implements AfterViewInit
 {
-    constructor(readonly themeService: ThemeService)
-    {
-    }
+    constructor(readonly themeService: ThemeService) { }
 
     /**
      * We need to render these elements after the html is delivered

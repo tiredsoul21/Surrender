@@ -26,8 +26,9 @@
 */
 
 // Import Angular common modules
-import { NgModule }     from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgModule }       from '@angular/core';
+import { CommonModule }   from '@angular/common';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 // Web development
 import { MatIconModule }      from '@angular/material/icon';
@@ -47,6 +48,7 @@ import { SidebarService } from '../services/sidebar.service';
     [
         // Support modules
         CommonModule,
+        DragDropModule,
 
         // Design Imports
         MatIconModule,

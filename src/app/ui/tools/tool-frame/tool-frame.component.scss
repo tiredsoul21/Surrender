@@ -1,9 +1,11 @@
 .all-content
 {
+    margin-left: 5px;
+    margin-bottom: 5px;
     min-width: 100px;
     border: 2px solid var(--colorPrimaryShade4);
     border-radius: 8px;
-
+    height: 72px;
     .close-button
     {
         float: right;

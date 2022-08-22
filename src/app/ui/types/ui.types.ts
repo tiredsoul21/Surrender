@@ -36,6 +36,9 @@ export interface SidebarOptions
 
     /** This is the title that is displayed at the top of the Sidebar */
     sidebarHeader?: string;
+
+    /** List of receivers  the sidebar can drop items too (html IDs) */
+    dragDropRecerivers?: Array<string>;
 }
 
 /**
