@@ -27,8 +27,11 @@
 
 // Import Angular common modules
 import { Component }               from "@angular/core";
+import { QueryList }               from "@angular/core";
+import { ViewChildren }            from "@angular/core";
 import { ChangeDetectorRef }       from "@angular/core";
 import { ChangeDetectionStrategy } from '@angular/core';
+import { MatMenuTrigger }          from "@angular/material/menu";
 
 // Custom Types
 import { SidebarOptions }         from "../types/ui.types";
@@ -56,6 +59,15 @@ import { SidebarService } from '../services/sidebar.service'
  */
 export class SidebarComponent
 {
+    /** Necessary to close menu on mouseleave event to drop overlay */
+    @ViewChildren(MatMenuTrigger) menuTrigger: QueryList<MatMenuTrigger>;
+
+    /** Mouse over trigger if entered a lvl 2 menu -- used for menu close */
+    public menuMouseover2: boolean = false;
+
+    /** Mouse over trigger if entered a lvl 3 menu -- used for menu close */
+    public menuMouseover3: boolean = false;
+
     /** My personal list of menu item */
     private mySidebarMenuItems: Array<ComponentIconMenuGroup | ComponentIconMenuItem> = [];
 
@@ -69,7 +81,8 @@ export class SidebarComponent
     private sidebarOptions: SidebarOptions =
     {
         sidebarHeader: 'Analysis',
-        sidebarTransition: 500
+        sidebarTransition: 500,
+        dragDropRecerivers: []
     }
 
     constructor(readonly sidebarService: SidebarService,
@@ -118,9 +131,23 @@ export class SidebarComponent
         return this.sidebarOptions.sidebarHeader;
     }
 
+    /**
+     * This method returns the sidebar menu for display rendering
+     * @returns {Array<ComponentIconMenuGroup | ComponentIconMenuItem>}
+     *      List of menu items
+     */
     get sidebarMenuItems(): Array<ComponentIconMenuGroup | ComponentIconMenuItem>
     {
         return this.mySidebarMenuItems;
+    }
+
+    /**
+     * This method returns the element ids for dropable containers
+     * @returns {Array<string>} - ID array
+     */
+    get cdkReceivers(): Array<string>
+    {
+        return this.sidebarOptions.dragDropRecerivers;
     }
 
     /**
@@ -141,6 +168,10 @@ export class SidebarComponent
         if (options.sidebarTransition != undefined)
         {
             this.sidebarOptions.sidebarTransition = options.sidebarTransition;
+        }
+        if (options.dragDropRecerivers != undefined && options.dragDropRecerivers.length > 0)
+        {
+            this.sidebarOptions.dragDropRecerivers = options.dragDropRecerivers;
         }
     }
 
@@ -175,6 +206,27 @@ export class SidebarComponent
     public hasSubItems(group: ComponentIconMenuGroup): boolean
     {
         return !(group.subGroupItems == undefined || group.subGroupItems.length == 0);
+    }
+
+    /**
+     * This mehtod handles logic for sucessful menu close
+     */
+    closeMenu(): void
+    {
+        // Execute a delay to allow menu transitions
+        setTimeout(() =>
+        {
+            // If mouse is over a menu exit
+            if (this.menuMouseover2 || this.menuMouseover3)
+            {
+                return;
+            }
+            // Else close all menus
+            for(let component of this.menuTrigger)
+            {
+                component.closeMenu()
+            }
+        }, 50)
     }
 }
 

@@ -32,24 +32,16 @@
         padding-left: 8px;
         padding-right: 8px;
         width: 100%;
-        .icon-btn
+    }
+    
+    .icon-btn
+    {
+        border-radius: 5px;
+        width: 100%;
+        .drop-list-btn
         {
-            border-radius: 5px;
-            width: 100%;
-            .drop-list-btn
-            {
-                align-items: center;
-                flex-flow: row;
-                .drop-list-text
-                {
-                    white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    max-width: 75%;
-                    margin-left: 5px;
-                    font-size: 16px;
-                }
-            }
+            align-items: center;
+            flex-flow: row;
         }
     }
     .panel-text
@@ -73,6 +65,28 @@
     .mini-component-btn
     {
         margin-bottom: 10px;
+    }
+    .drop-list-text
+    {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 75%;
+        margin-left: 5px;
+        font-size: 16px;
+    }
+    .square-button-border
+    {
+        height: 40px;
+        .field-list
+        {
+            .field-box-move
+            {
+                height:40px;
+                width: 40px;
+                justify-content: center;
+            }
+        }
     }
 }
 
@@ -106,4 +120,41 @@
         left: 45px;
         bottom: 40px;
     }
+}
+
+  
+.field-list
+{
+    min-height: 40px;
+    background: inherit;
+    overflow: hidden;
+    display: block;
+    color: var(--fontColor);
+}
+
+.field-box,
+.field-box-move
+{
+    color: var(--fontColor);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: inherit;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+.field-box-move
+{
+    cursor: move;
+}
+  
+.cdk-drag-preview
+{
+    padding-left: 8px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    background-color: rgba(132, 132, 132, 0.3);
+    box-shadow: 0 5px 5px -3px rgba(132, 132, 132, 0.2),
+                0 8px 10px 1px rgba(132, 132, 132, 0.14),
+                0 3px 14px 2px rgba(132, 132, 132, 0.12);
 }

@@ -30,15 +30,17 @@ import { Component }        from '@angular/core';
 import { ViewChild }        from '@angular/core';
 import { ViewContainerRef } from '@angular/core';
 import { ComponentFactory } from '@angular/core';
+import { CdkDragDrop }      from '@angular/cdk/drag-drop';
 
 // Support services
 import { NavbarService } from 'src/app/ui/services/navbar.service';
 
 // Custom Types
-import { NavbarOptions }      from '../types/ui.types';
-import { ItemSelection }      from '../../types/general.types';
-import { ComponentMenuItem }  from '../../types/general.types';
-import { ComponentMenuGroup } from '../../types/general.types';
+import { NavbarOptions }         from '../types/ui.types';
+import { ItemSelection }         from '../../types/general.types';
+import { ComponentMenuItem }     from '../../types/general.types';
+import { ComponentMenuGroup }    from '../../types/general.types';
+import { ComponentIconMenuItem } from '../../types/general.types';
 
 // Base Factory Type import
 import { ToolFrameComponent } from '../tools/tool-frame/tool-frame.component';
@@ -145,8 +147,10 @@ export class NavbarComponent
      *      that is indended to fill a mini tool frame.  Must be an extension of
      *      ToolFrameComponent
      */
-    public dropEvent(componentFactory: ComponentFactory<ToolFrameComponent>): void
+    public dropEvent(event: CdkDragDrop<ComponentIconMenuItem>): void
     {
+        let componentFactory: ComponentFactory<ToolFrameComponent> = event.item.data.componentFactory;
+
         // add the component to the view
         const componentRef = this.dropLead.createComponent(componentFactory);
 

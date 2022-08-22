@@ -1,7 +1,6 @@
 .all-content
 {
     width: 100%;
-    height: 88px;
     padding: 8px;
     background: var(--colorPrimaryShade6);
     .navbar-content
@@ -49,7 +48,27 @@
     margin-left: 10px;
 }
 
+.component-container
+{
+    display: contents;
+    .drop-lead
+    {
+        display: none;
+    }
+}
+
+
 .drop-container
 {
-    display: none;
+    display: flex;
+    width: 100px;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(132, 132, 132, 0.2);
+    min-height: 100%;
+    margin-left: 8px;
+    .drop-icon
+    {
+        color: var(--fontColor);
+    }
 }
